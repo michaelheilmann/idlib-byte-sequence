@@ -24,8 +24,10 @@
 // memcpy, memmove, memset, memcmp
 #include <string.h>
 
+#include "idlib/byte_sequence/find.h"
+
 idlib_status idlib_byte_sequence_copy(void* p, void const* q, size_t n) {
-  if (!p || !q) {
+  if (!p || !q || n > SIZE_MAX - 2) {
     return IDLIB_ARGUMENT_INVALID;
   }
   memcpy(p, q, n);
@@ -33,7 +35,7 @@ idlib_status idlib_byte_sequence_copy(void* p, void const* q, size_t n) {
 }
 
 idlib_status idlib_byte_sequence_move(void* p, void const* q, size_t n) {
-  if (!p || !q) {
+  if (!p || !q  || n > SIZE_MAX - 2) {
     return IDLIB_ARGUMENT_INVALID;
   }
   memmove(p, q, n);
@@ -41,14 +43,14 @@ idlib_status idlib_byte_sequence_move(void* p, void const* q, size_t n) {
 }
 
 idlib_status idlib_byte_sequence_fill_zero(void* p, size_t n) {
-  if (!p) {
+  if (!p || n > SIZE_MAX - 2) {
     return IDLIB_ARGUMENT_INVALID;
   }
   memset(p, 0, n);
   return IDLIB_SUCCESS;
 }
 
-idlib_status idlib_byte_sequence_fill(void* p, size_t n, uint8_t v) {
+idlib_status idlib_byte_sequence_fill_value(void* p, size_t n, uint8_t v) {
   if (!p) {
     return IDLIB_ARGUMENT_INVALID;
   }
@@ -57,10 +59,64 @@ idlib_status idlib_byte_sequence_fill(void* p, size_t n, uint8_t v) {
 }
 
 idlib_status idlib_byte_sequence_compare(int8_t* RETURN, void const* p, void const* q, size_t n) {
-  if (!RETURN || !p || !q) {
+  if (!RETURN || !p || n > SIZE_MAX - 2 || !q) {
     return IDLIB_ARGUMENT_INVALID;
   }
   int temporary = memcmp(p, q, n);
   *RETURN = temporary < 0 ? -1 : (temporary > 0 ? +1 : 0);
   return IDLIB_SUCCESS;
 }
+
+idlib_status idlib_byte_sequence_find_value(void const* p, size_t n, uint8_t v, bool* found, size_t* index) {
+  if (!p || !found || !index) {
+    return IDLIB_ARGUMENT_INVALID;
+  }
+  void const* q = memchr(p, v, n);
+  if (!q) {
+    *found = false;
+    *index = n;
+  } else {
+    *found = true;
+    *index = ((uint8_t const*)q) - ((uint8_t const*)p);
+  }
+  return IDLIB_SUCCESS;
+}
+
+idlib_status idlib_byte_sequence_find(void const* p, size_t n, void const* q, size_t m, bool* found, size_t* index) {
+  return idlib_byte_sequence_naive_find(p, n, q, m, found, index);
+}
+
+idlib_status idlib_byte_sequence_starts_with(bool* RETURN, void const* p, size_t n, void const* q, size_t m) {
+  if (!RETURN || !p || n > SIZE_MAX - 2 || !q || m > SIZE_MAX - 2) {
+    return IDLIB_ARGUMENT_INVALID;
+  }
+  if (0 == m) {
+    *RETURN = true;
+    return IDLIB_SUCCESS;
+  }
+  // If haystack is shorter than needle, then the former cannot start with the latter.
+  if (n < m) {
+    *RETURN = false;
+    return IDLIB_SUCCESS;
+  }
+  *RETURN = !memcmp(p, q, m);
+  return IDLIB_SUCCESS;
+}
+
+idlib_status idlib_byte_sequence_ends_with(bool* RETURN, void const* p, size_t n, void const* q, size_t m) {
+  if (!RETURN || !p || n > SIZE_MAX - 2 || !q || m > SIZE_MAX - 2) {
+    return IDLIB_ARGUMENT_INVALID;
+  }
+  if (0 == m) {
+    *RETURN = true;
+    return IDLIB_SUCCESS;
+  }
+  // If haystack is shorter than needle, then the former cannot end with the latter.
+  if (n < m) {
+    *RETURN = false;
+    return IDLIB_SUCCESS;
+  }
+  *RETURN = !memcmp(((char const*)p) + n - m, q, m);
+  return IDLIB_SUCCESS;
+}
+

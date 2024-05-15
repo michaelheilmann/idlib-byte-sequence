@@ -1,5 +1,5 @@
 #
-# IdLib Text
+# IdLib Byte Sequence
 # Copyright (C) 2018-2024 Michael Heilmann. All rights reserved.
 #
 # This software is provided 'as-is', without any express or implied
@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.20)
 
 include(${idlib-process.source-dir}/cmake/all.cmake)
 
-set(name idlib-byte-sequence.test.find_first)
+set(name idlib-byte-sequence.test.find_value)
 
 begin_executable()
 

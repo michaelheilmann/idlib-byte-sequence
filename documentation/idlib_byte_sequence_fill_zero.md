@@ -14,8 +14,8 @@ idlib_byte_sequence_fill_zero
 Assign each element of a memory block `(p,n)` the zero value.
 
 ## Parameters
-- `p` A pointer to the memory block.
-- `n` The size, in Bytes, of the memory block.
+- `p` A pointer to an array of Bytes of length `n`.
+- `n` The size of the array pointed to by `p`.
 
 ## Return values
 `IDLIB_SUCCESS` on success.

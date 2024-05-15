@@ -23,9 +23,9 @@ cmake_minimum_required(VERSION 3.20)
 
 include(${idlib-process.source-dir}/cmake/all.cmake)
 
-set(name idlib-byte-sequence)
+set(name idlib-byte-sequence.test.starts_with)
 
-begin_library()
+begin_executable()
 
 if (${${name}.compiler_c} STREQUAL ${${name}.compiler_c_msvc})
   set("IDLIB_COMPILER_C" "IDLIB_COMPILER_C_MSVC")
@@ -61,25 +61,17 @@ else()
   message(FATAL_ERROR "operating system detection not executed")
 endif()
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/includes/idlib/byte_sequence/configure.h.in ${CMAKE_CURRENT_BINARY_DIR}/includes/idlib/byte_sequence/configure.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/includes/configure.h.in ${CMAKE_CURRENT_BINARY_DIR}/includes/configure.h)
 
-list(APPEND ${name}.configuration_files "${CMAKE_CURRENT_BINARY_DIR}/includes/idlib/byte_sequence/configure.h")
+list(APPEND ${name}.configuration_files "${CMAKE_CURRENT_BINARY_DIR}/includes/configure.h")
+list(APPEND ${name}.source_files "${CMAKE_CURRENT_SOURCE_DIR}/sources/main.c")
 
-list(APPEND ${name}.header_files "${CMAKE_CURRENT_SOURCE_DIR}/includes/idlib/byte_sequence.h")
-list(APPEND ${name}.source_files "${CMAKE_CURRENT_SOURCE_DIR}/sources/idlib/byte_sequence.c")
-
-list(APPEND ${name}.header_files "${CMAKE_CURRENT_SOURCE_DIR}/includes/idlib/byte_sequence/find.h")
-list(APPEND ${name}.source_files "${CMAKE_CURRENT_SOURCE_DIR}/sources/idlib/byte_sequence/find.c")
-
-end_library()
-
-target_link_libraries(${name} idlib-process)
+end_executable()
 
 source_group(TREE ${CMAKE_CURRENT_BINARY_DIR} FILES ${${name}.configuration_files})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${${name}.header_files})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${${name}.source_files})
 
-# We must link libm under Linux.
-if (${${name}.operating_system_id} EQUAL ${${name}.operating_system_id_linux})
-  target_link_libraries(${name} m)
-endif()
+target_link_libraries(${name} PRIVATE idlib-byte-sequence)
+
+add_test(NAME ${name} COMMAND ${name})

@@ -1,4 +1,4 @@
-# `idlib_byte_sequence_fill`
+# `idlib_byte_sequence_fill_value`
 
 ## C Signature
 ```
@@ -12,12 +12,12 @@ idlib_byte_sequence_fill
 ```
 
 ## Description
-Assign each Byte of a memory block `(p,n)` the specified value.
+Assign each element of a Byte sequence `(p,n)` the specified value.
 
 ## Parameters
-- `p` A pointer to the memory block.
-- `n` The size, in Bytes, of the memory block.
-- `v` The value to assign to each element in the memory block.
+- `p` A pointer to an array of Bytes of length `n`.
+- `n` The length of the array pointed to by `p`.
+- `v` The value to assign to each element in the array.
 
 ## Return values
 `IDLIB_SUCCESS` on success.

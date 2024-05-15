@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 3.20)
 
 include(${idlib-process.source-dir}/cmake/all.cmake)
 
-set(name idlib-byte-sequence.test.is_prefix)
+set(name idlib-byte-sequence.test.ends_with)
 
 begin_executable()
 

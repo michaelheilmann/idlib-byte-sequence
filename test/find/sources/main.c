@@ -21,8 +21,42 @@
 
 #include "idlib/byte_sequence.h"
 
-// EXIT_SUCCESS
+// EXIT_SUCCESS, EXIT_FAILURE
 #include <stdlib.h>
+
+static idlib_status
+test1
+  (
+  )
+{
+  bool result;
+  char const* p = "x";
+  size_t n = 1;
+  char const* q = "y";
+  size_t m = 1;
+  bool found = false;
+  size_t index = 0;
+  if (idlib_byte_sequence_find(p, n, q, m, &found, &index)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_find(p, n, q, m, &found, NULL)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_find(p, n, q, m, NULL, &index)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_find(p, n, NULL, m, &found, &index)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_find(NULL, n, q, m, &found, &index)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  return IDLIB_SUCCESS;
+}
 
 int
 main
@@ -30,4 +64,10 @@ main
     int argc,
     char** argv
   )
-{ return EXIT_SUCCESS; }
+{
+  if (test1()) {
+    return EXIT_FAILURE;
+  }
+  return EXIT_SUCCESS;
+}
+

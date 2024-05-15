@@ -24,10 +24,43 @@
 // EXIT_SUCCESS
 #include <stdlib.h>
 
+static idlib_status
+test1
+  (
+  )
+{
+  bool result;
+  char const* p = "x";
+  size_t n = 1;
+  char const* q = "y";
+  size_t m = 1;
+  if (idlib_byte_sequence_ends_with(&result, p, n, q, m)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_ends_with(&result, p, n, NULL, m)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_ends_with(&result, NULL, n, q, m)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  // Must not be NULL.
+  if (!idlib_byte_sequence_ends_with(NULL, p, n, q, m)) {
+    return IDLIB_ENVIRONMENT_FAILED;
+  }
+  return IDLIB_SUCCESS;
+}
+
 int
 main
   (
     int argc,
     char** argv
   )
-{ return EXIT_SUCCESS; }
+{
+  if (test1()) {
+    return EXIT_FAILURE;
+  }
+  return EXIT_SUCCESS;
+}

@@ -24,6 +24,8 @@
 
 #include "idlib/process.h"
 
+#include <stdbool.h>
+
 // https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_copy.md
 idlib_status idlib_byte_sequence_copy(void* p, void const* q, size_t n);
 
@@ -33,10 +35,22 @@ idlib_status idlib_byte_sequence_move(void* p, void const* q, size_t n);
 // https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_fill_zero.md
 idlib_status idlib_byte_sequence_fill_zero(void* p, size_t n);
 
-// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_fill.md
-idlib_status idlib_byte_sequence_fill(void* p, size_t n, uint8_t v);
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_fill_value.md
+idlib_status idlib_byte_sequence_fill_value(void* p, size_t n, uint8_t v);
 
 // https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_compare.md
 idlib_status idlib_byte_sequence_compare(int8_t* RETURN, void const* p, void const* q, size_t n);
+
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_find_value.md
+idlib_status idlib_byte_sequence_find_value(void const* p, size_t n, uint8_t v, bool* found, size_t* index);
+
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_find.md
+idlib_status idlib_byte_sequence_find(void const* p, size_t n, void const *q, size_t m, bool* found, size_t* index);
+
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_starts_with.md
+idlib_status idlib_byte_sequence_starts_with(bool* RETURN, void const* p, size_t n, void const* q, size_t m);
+
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_ends_with.md
+idlib_status idlib_byte_sequence_ends_with(bool* RETURN, void const* p, size_t n, void const* q, size_t m);
 
 #endif // IDLIB_BYTE_SEQUENCE_H_INCLUDED

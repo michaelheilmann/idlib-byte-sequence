@@ -16,9 +16,9 @@ Copy the contents of the memory block denoted by `(q,n)` over the contents of th
 The memory blocks may overlap.
 
 ## Parameters
-- `p` A pointer to the target memory block.
-- `q` A pointer to the source memory block.
-- `n` The size, in elements, of the memory blocks.
+- `p` A pointer to an array of Bytes of length `n`.
+- `q` A pointer to an array of Bytes of length `n`.
+- `n` The size, in elements, of the arrays pointed to by `p` and `q`, respectively.
 
 ## Return values
 `IDLIB_SUCCESS` on success.
