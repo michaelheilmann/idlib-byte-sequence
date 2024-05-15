@@ -24,19 +24,19 @@
 
 #include "idlib/process.h"
 
-// http://github.com/michaelheilmann/idlib-byte-sequence/blob/documentation/idlib_byte_sequence_copy.md
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_copy.md
 idlib_status idlib_byte_sequence_copy(void* p, void const* q, size_t n);
 
-// http://github.com/michaelheilmann/idlib-byte-sequence/blob/documentation/idlib_byte_sequence_move.md
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_move.md
 idlib_status idlib_byte_sequence_move(void* p, void const* q, size_t n);
 
-// http://github.com/michaelheilmann/idlib-byte-sequence/blob/documentation/idlib_byte_sequence_fill_zero.md
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_fill_zero.md
 idlib_status idlib_byte_sequence_fill_zero(void* p, size_t n);
 
-// http://github.com/michaelheilmann/idlib-byte-sequence/blob/documentation/idlib_byte_sequence_fill.md
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_fill.md
 idlib_status idlib_byte_sequence_fill(void* p, size_t n, uint8_t v);
 
-// http://github.com/michaelheilmann/idlib-byte-sequence/blob/documentation/idlib_byte_sequence_compare.md
+// https://github.com/michaelheilmann/idlib-byte-sequence/blob/main/documentation/idlib_byte_sequence_compare.md
 idlib_status idlib_byte_sequence_compare(int8_t* RETURN, void const* p, void const* q, size_t n);
 
 #endif // IDLIB_BYTE_SEQUENCE_H_INCLUDED
