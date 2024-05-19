@@ -1,8 +1,6 @@
 # IdLib Byte Sequence
 Welcome to *IdLib Byte Sequence*.
-
-*IdLib Byte Sequence* provides functionality for sequences of Bytes in C.
-
+*IdLib Byte Sequence* provides functionality related to the analysis and manipulation of sequences of Bytes.
 The library is designed as *backing* library to be integrated into other C programs.
 
 ## Modules
